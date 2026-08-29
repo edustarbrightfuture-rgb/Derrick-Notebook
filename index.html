@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>MR DERRICK NOTEBOOK</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&display=swap');
+:root{
+--bg:#f7f3f0;--panel:#fffdfc;--text:#403936;--muted:#978b84;--line:#eadfd8;
+--accent:#c96f83;--soft:#f6e8ec;--danger:#b85d5d;--shadow:0 16px 45px rgba(90,65,54,.09)
+}
+*{box-sizing:border-box}
+body,button,input,textarea,select{letter-spacing:.02em}
+.item-title,.logo,.login-left h1,.topbar h1{letter-spacing:.01em}
+body{margin:0;font-family:"LXGW WenKai TC","KaiTi","STKaiti","DFKai-SB","Microsoft JhengHei",cursive;background:var(--bg);color:var(--text)}
+button,input,textarea,select{font-family:"LXGW WenKai TC","KaiTi","STKaiti","DFKai-SB","Microsoft JhengHei",cursive;font-size:inherit}
+#loginScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:radial-gradient(circle at 10% 0,#fffaf6,transparent 30%),radial-gradient(circle at 90% 10%,#efe1dc,transparent 25%),var(--bg)}
+.login-shell{width:min(1080px,100%);min-height:620px;display:grid;grid-template-columns:1fr 1fr;background:white;border-radius:34px;overflow:hidden;box-shadow:0 28px 80px rgba(91,68,55,.14)}
+.login-left{padding:54px;background:linear-gradient(150deg,#fff,#f7ebe6);display:flex;flex-direction:column;justify-content:space-between}
+.login-left h1{font-size:54px;line-height:.98;margin:24px 0 22px}.login-left h1 span{color:var(--accent)}.login-left p{color:var(--muted);line-height:1.8}
+.badge{display:inline-block;background:#fff;color:var(--accent);border-radius:999px;padding:8px 12px;font-size:12px;font-weight:700}.quote{background:rgba(255,255,255,.7);padding:14px;border-radius:16px;text-align:center;color:#766b65}
+.login-right{padding:54px;display:flex;align-items:center}.login-box{width:100%;max-width:400px;margin:auto}
+.login-box h2{font-size:32px;margin:0 0 8px}.desc{color:var(--muted);margin-bottom:28px}.field{margin-bottom:16px}.field label{display:block;font-size:13px;font-weight:700;margin-bottom:8px}
+.input-wrap{position:relative}.login-box input{width:100%;height:54px;border:1px solid var(--line);border-radius:15px;padding:0 14px;outline:none}.password input{padding-right:82px}
+.toggle{position:absolute;right:9px;top:50%;transform:translateY(-50%);border:0;background:var(--soft);color:var(--accent);border-radius:9px;padding:7px 10px;cursor:pointer;font-size:12px;font-weight:700}
+.options{display:flex;justify-content:space-between;align-items:center;margin:5px 0 20px;font-size:13px;color:var(--muted)}.remember{display:flex;gap:7px;align-items:center}.remember input{width:16px;height:16px}
+.login-btn{width:100%;height:54px;border:0;border-radius:15px;background:var(--accent);color:white;font-weight:700;cursor:pointer}.message{display:none;padding:11px 12px;border-radius:12px;margin-bottom:14px;font-size:13px}.message.error{display:block;background:#fbeaea;color:#a34e4e}
+#appScreen{display:none}.app{display:grid;grid-template-columns:240px 1fr;min-height:100vh}.sidebar{background:rgba(255,255,255,.76);border-right:1px solid var(--line);padding:26px 18px;position:sticky;top:0;height:100vh;backdrop-filter:blur(18px)}
+.logo{font-size:21px;font-weight:700;line-height:1.05;margin-bottom:6px}.subtitle{font-size:12px;color:var(--muted);margin-bottom:24px}.nav-title{font-size:10px;color:#b5aaa3;margin:18px 12px 6px;text-transform:uppercase;letter-spacing:1px}
+.nav button{width:100%;border:0;background:transparent;text-align:left;padding:11px 12px;border-radius:12px;margin:3px 0;color:var(--text);cursor:pointer}.nav button:hover,.nav button.active{background:white;box-shadow:0 8px 22px rgba(90,65,54,.06)}
+.main{padding:28px;max-width:1450px;width:100%;margin:0 auto}.page{display:none}.page.active{display:block}.topbar{display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap;margin-bottom:22px}.topbar h1{margin:0;font-size:29px}.muted{color:var(--muted)}.date{font-size:13px;color:var(--muted);margin-top:4px}
+.row{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.between{justify-content:space-between}.btn{border:0;border-radius:13px;padding:10px 13px;cursor:pointer;background:white;color:var(--text);box-shadow:0 7px 18px rgba(80,55,43,.06)}.btn.primary{background:var(--text);color:white}.btn.soft{background:var(--soft);color:var(--accent)}
+.card{background:rgba(255,255,255,.88);border:1px solid rgba(255,255,255,.95);border-radius:22px;padding:20px;box-shadow:var(--shadow)}
+.dashboard-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}.welcome{grid-column:span 8;min-height:220px;background:linear-gradient(135deg,#fff,#f8ece8);display:flex;flex-direction:column;justify-content:center}.today-card{grid-column:span 4}.stat{grid-column:span 3}.stat .num{font-size:28px;font-weight:700;margin-top:8px}
+.shortcut-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:16px}.shortcut{background:white;border:1px solid var(--line);border-radius:18px;padding:18px;cursor:pointer;transition:.15s}.shortcut:hover{transform:translateY(-2px);box-shadow:var(--shadow)}.shortcut .icon{font-size:28px}.shortcut b{display:block;margin-top:10px}.shortcut small{color:var(--muted)}
+.toolbar{display:grid;grid-template-columns:2fr 1fr;gap:10px;margin-bottom:16px}.input,textarea,select{width:100%;border:1px solid var(--line);background:white;border-radius:13px;padding:11px 12px;outline:none;color:var(--text)}textarea{min-height:130px;resize:vertical}
+.list-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.item{background:white;border:1px solid var(--line);border-radius:17px;padding:15px}.item-title{font-weight:700}.item-meta{font-size:12px;color:var(--muted);margin-top:5px}.chips{display:flex;gap:5px;margin-top:8px;flex-wrap:wrap}.chip{font-size:11px;background:var(--soft);padding:5px 8px;border-radius:999px}
+.actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}.mini{border:0;background:#f7f1ed;border-radius:9px;padding:7px 9px;cursor:pointer}.mini.warn{color:var(--danger);background:#f9e9e9}
+.todo-board{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.todo-col{background:rgba(255,255,255,.7);border-radius:18px;padding:14px;min-height:300px}.todo-col h3{font-size:14px;color:var(--muted);margin-top:0}.overdue{color:var(--danger);font-weight:700}.done{text-decoration:line-through;opacity:.55}
+.cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}.dow{text-align:center;font-size:12px;color:var(--muted)}.day{background:white;border:1px solid var(--line);border-radius:13px;min-height:100px;padding:7px;cursor:pointer;overflow:hidden}.day.other{opacity:.35}.day.today{outline:2px solid var(--accent)}.daynum{font-weight:700;font-size:13px}.event{font-size:10px;margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tag-wrap{display:flex;gap:8px;flex-wrap:wrap}.tag-pill{background:white;border:1px solid var(--line);border-radius:999px;padding:8px 11px}.search-results{display:grid;gap:12px}.setting-block{max-width:720px}.setting-row{display:flex;justify-content:space-between;gap:16px;align-items:center;padding:17px 0;border-bottom:1px solid var(--line)}.empty{color:var(--muted);padding:14px 0;font-size:13px}
+.modal{position:fixed;inset:0;background:rgba(45,37,34,.28);display:none;align-items:center;justify-content:center;padding:20px;z-index:50}.modal.show{display:flex}.modal-box{width:min(620px,100%);background:white;border-radius:22px;padding:22px;box-shadow:var(--shadow)}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}.span2{grid-column:1/-1}
+@media(max-width:900px){.login-shell{grid-template-columns:1fr}.login-left{padding:34px}.login-left h1{font-size:40px}.app{grid-template-columns:1fr}.sidebar{display:none}.main{padding:18px}.welcome,.today-card,.stat{grid-column:span 12}.shortcut-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:680px){.list-grid,.todo-board,.toolbar,.form-grid{grid-template-columns:1fr}.shortcut-grid{grid-template-columns:1fr 1fr}.day{min-height:72px}.topbar h1{font-size:24px}}
+
+.motto-display{
+  max-width:430px;
+  margin-left:auto;
+  text-align:right;
+  white-space:pre-line;
+  font-size:18px;
+  line-height:1.65;
+  color:#756861;
+  padding:10px 4px;
+}
+.motto-display:empty{display:none}
+.motto-editor{
+  margin-top:18px;
+  padding-top:18px;
+  border-top:1px solid var(--line);
+}
+.motto-preview{
+  min-height:92px;
+  background:#fbf6f3;
+  border:1px dashed #dfcfc7;
+  border-radius:16px;
+  padding:16px;
+  white-space:pre-line;
+  font-size:18px;
+  line-height:1.65;
+  text-align:right;
+}
+
+
+.tag-select-box{
+  border:1px solid var(--line);
+  background:white;
+  border-radius:14px;
+  padding:12px;
+}
+.tag-select-title{
+  font-size:13px;
+  color:var(--muted);
+  margin-bottom:9px;
+}
+.tag-checks{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+.tag-option{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  background:#fbf5f2;
+  border:1px solid #eadfd8;
+  border-radius:999px;
+  padding:7px 10px;
+  cursor:pointer;
+  font-size:13px;
+}
+.tag-option input{
+  width:auto;
+  margin:0;
+}
+
+.event{
+  cursor:pointer;
+  padding:4px 6px;
+  border-radius:8px;
+  transition:.15s ease;
+}
+.event:hover{
+  background:#f7ecef;
+  color:var(--accent);
+}
+.detail-grid{
+  display:grid;
+  grid-template-columns:120px 1fr;
+  gap:10px 14px;
+  margin-top:16px;
+}
+.detail-label{
+  color:var(--muted);
+  font-size:13px;
+}
+.detail-value{
+  font-size:14px;
+  line-height:1.7;
+  white-space:pre-wrap;
+}
+.detail-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+}
+.detail-tag{
+  background:var(--soft);
+  border-radius:999px;
+  padding:5px 9px;
+  font-size:12px;
+}
+@media(max-width:680px){
+  .detail-grid{grid-template-columns:1fr}
+}
+
+.urgent-banner{
+  display:none;
+  margin-bottom:18px;
+  background:linear-gradient(90deg,#fff1f1,#fde6e8);
+  border:1px solid #efb7bd;
+  color:#9f3f4a;
+  border-radius:18px;
+  padding:14px 16px;
+  cursor:pointer;
+  box-shadow:0 10px 26px rgba(184,93,93,.10);
+}
+.urgent-banner.show{display:flex}
+.urgent-banner strong{font-size:15px}
+.urgent-card{
+  border-color:#efb7bd !important;
+  background:linear-gradient(180deg,#fff,#fff6f6) !important;
+}
+.urgent-chip{
+  background:#ffe1e4 !important;
+  color:#a33f4b !important;
+  font-weight:700;
+}
+.calendar-urgent{
+  background:#fff0f2 !important;
+  color:#a33f4b !important;
+  border:1px solid #efb7bd;
+}
+.urgent-popup-list{
+  display:grid;
+  gap:10px;
+  margin-top:14px;
+}
+.urgent-popup-item{
+  background:#fff6f6;
+  border:1px solid #efc6ca;
+  border-radius:14px;
+  padding:12px 14px;
+}
+.urgent-popup-item b{display:block;margin-bottom:4px}
+
+.cloud-status{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  z-index:120;
+  padding:9px 12px;
+  border-radius:999px;
+  background:#fff;
+  border:1px solid var(--line);
+  box-shadow:var(--shadow);
+  font-size:12px;
+  color:var(--muted);
+}
+.cloud-status.syncing{color:#9a6b27;background:#fff8e8}
+.cloud-status.ok{color:#4f7c5b;background:#eef8f0}
+.cloud-status.error{color:#a44d4d;background:#fdeeee}
+
+.day{
+  cursor:pointer;
+  transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+.day:hover{
+  border-color:#e8b8c2;
+  box-shadow:0 8px 22px rgba(194,122,139,.09);
+  transform:translateY(-1px);
+}
+.day.other{cursor:default}
+.day-event-count{
+  margin-top:6px;
+  font-size:10px;
+  color:#c96e81;
+  font-weight:700;
+}
+.day-list{
+  display:grid;
+  gap:10px;
+  margin-top:14px;
+  max-height:55vh;
+  overflow:auto;
+  padding-right:3px;
+}
+.day-list-item{
+  width:100%;
+  text-align:left;
+  border:1px solid #eadfd8;
+  background:#fffdfc;
+  border-radius:15px;
+  padding:12px 14px;
+  cursor:pointer;
+  transition:.15s ease;
+}
+.day-list-item:hover{
+  border-color:#dfa0ae;
+  background:#fff7f8;
+}
+.day-list-item.urgent{
+  border-color:#efb7bd;
+  background:#fff5f6;
+}
+.day-list-title{
+  font-size:15px;
+  font-weight:700;
+  color:#4e433e;
+}
+.day-list-meta{
+  margin-top:4px;
+  font-size:11px;
+  color:#a09189;
+}
+
+/* Calendar two-step click */
+.day[data-date]{
+  position:relative;
+  cursor:pointer;
+}
+.day[data-date] .event,
+.day[data-date] .day-event-count{
+  pointer-events:none; /* clicks always go to the whole date cell */
+}
+#dayItemsModal .modal-box{
+  width:min(680px,94vw);
+  max-height:82vh;
+  overflow:hidden;
+}
+#dayItemsModal .day-list{
+  max-height:58vh;
+  overflow:auto;
+  margin-top:16px;
+}
+#dayItemsModal .day-list-item{
+  display:block;
+  width:100%;
+  padding:14px 16px;
+  margin:0;
+  border:1px solid #eadfd8;
+  background:#fffdfc;
+  border-radius:16px;
+  text-align:left;
+  cursor:pointer;
+}
+#dayItemsModal .day-list-item + .day-list-item{
+  margin-top:10px;
+}
+#dayItemsModal .day-list-item:hover{
+  background:#fff4f6;
+  border-color:#e6a9b5;
+}
+#dayItemsModal .day-list-title{
+  font-size:16px;
+  font-weight:700;
+}
+#dayItemsModal .day-list-meta{
+  margin-top:5px;
+  font-size:12px;
+  color:#9b8b82;
+}
+</style>
+<script src="https://npmcdn.com/parse/dist/parse.min.js"></script>
+</head>
+<body>
+
+<section id="loginScreen">
+<div class="login-shell">
+<div class="login-left">
+<div><div class="badge">☁ PRIVATE SPACE</div><h1>MR DERRICK<br><span>NOTEBOOK</span></h1><p>一个只属于你的私人空间。记录想法、待办、重要事项与每天的安排，让所有事情都清晰有序地留在这里。</p></div>
+<div class="quote">“Write it down. Clear your mind. Keep moving.”</div>
+</div>
+<div class="login-right"><div class="login-box"><h2>欢迎回来 ☁️</h2><div class="desc">请输入你的账号资料继续。</div><div id="loginMessage" class="message"></div>
+<div id="loginMsg" class="login-msg" style="display:none;margin:0 0 16px;padding:12px 14px;border-radius:13px;line-height:1.55;font-size:13px;"></div>
+        <div class="field"><label>账号 / ID</label><input id="userid" type="text" placeholder="请输入 ID"></div>
+<div class="field"><label>密码 / Password</label><div class="input-wrap password"><input id="password" type="password" placeholder="请输入密码"><button class="toggle" id="toggleBtn" onclick="togglePassword()">显示</button></div></div>
+<div class="options"><label class="remember"><input type="checkbox" id="remember"> 记住我</label></div><button class="login-btn" onclick="login()">进入我的 Notebook</button>
+<button class="login-btn" onclick="signupCloudUser()" style="margin-top:10px;background:#fff;color:#c96e81;border:1px solid #e8bcc6;">
+  第一次使用？建立云端账号
+</button>
+<button onclick="testBack4AppConnection()" style="width:100%;margin-top:9px;border:0;background:transparent;color:#9b8d86;font-size:12px;cursor:pointer;text-decoration:underline;">
+  测试 Back4App 连接
+</button>
+<div id="loginCloudHint" style="margin-top:12px;font-size:12px;color:#9b8d86;text-align:center;">
+  ☁️ Back4App 云端版 · 注册一次后以后只需登录
+</div></div></div>
+</div>
+</section>
+
+<section id="appScreen">
+<div class="app">
+<aside class="sidebar">
+<div class="logo">MR DERRICK<br>NOTEBOOK</div><div class="subtitle">Private workspace ☁️</div>
+<div class="nav">
+<div class="nav-title">MAIN</div>
+<button class="active" data-page="dashboard" onclick="goPage('dashboard')">🏠 Dashboard</button>
+<button data-page="notes" onclick="goPage('notes')">📝 随手记事</button>
+<button data-page="todo" onclick="goPage('todo')">✅ To-Do List</button>
+<button data-page="calendar" onclick="goPage('calendar')">📅 Calendar</button>
+<button data-page="pinned" onclick="goPage('pinned')">⭐ 重要置顶</button>
+<div class="nav-title">TOOLS</div>
+<button data-page="search" onclick="goPage('search')">🔎 搜索</button>
+<button data-page="tags" onclick="goPage('tags')">🏷️ 标签</button>
+<button data-page="settings" onclick="goPage('settings')">⚙️ 备份 & 设置</button>
+<button onclick="logout()">🔒 登出</button>
+</div>
+</aside>
+
+<main class="main">
+<section class="page active" id="page-dashboard">
+<div class="topbar">
+<div><h1>Good day, Mr Derrick ☁️</h1><div class="date" id="todayText"></div></div>
+<div class="row" style="margin-left:auto;justify-content:flex-end">
+  <div id="mottoDisplay" class="motto-display"></div>
+  <button class="btn primary" onclick="openNote()">+ 新笔记</button>
+</div>
+</div>
+<div id="urgentBanner" class="urgent-banner row between" onclick="openUrgentPopup()">
+  <div>
+    <strong id="urgentBannerText">🚨 你有紧急事项待处理</strong>
+    <div style="font-size:12px;margin-top:3px">点击查看紧急事项</div>
+  </div>
+  <div style="font-size:22px">→</div>
+</div>
+<div class="dashboard-grid">
+<div class="card welcome"><div class="muted">WELCOME BACK</div><h2 style="font-size:32px;margin:8px 0">今天想记录什么？</h2><p class="muted" style="max-width:600px;line-height:1.7">先在「随手记事」新增事项。To-Do List 会自动出现相同标题，Calendar 也会自动记录。</p></div>
+<div class="card today-card"><h3>📌 今天</h3><div id="dashToday"></div></div>
+<div class="card stat"><div class="muted">📝 笔记</div><div class="num" id="dashNotes">0</div></div>
+<div class="card stat"><div class="muted">✅ 未完成</div><div class="num" id="dashTodos">0</div></div>
+<div class="card stat"><div class="muted">⭐ 置顶</div><div class="num" id="dashPins">0</div></div>
+<div class="card stat"><div class="muted">⚠️ 逾期</div><div class="num" id="dashOverdue">0</div></div>
+</div>
+<div class="shortcut-grid">
+<div class="shortcut" onclick="goPage('notes')"><div class="icon">📝</div><b>随手记事</b><small>所有事项从这里新增</small></div>
+<div class="shortcut" onclick="goPage('todo')"><div class="icon">✅</div><b>To-Do List</b><small>只调整事项状态</small></div>
+<div class="shortcut" onclick="goPage('calendar')"><div class="icon">📅</div><b>Calendar</b><small>显示记事日期与标题</small></div>
+<div class="shortcut" onclick="goPage('pinned')"><div class="icon">⭐</div><b>重要置顶</b><small>查看重要事项</small></div>
+</div>
+</section>
+
+<section class="page" id="page-notes">
+<div class="topbar"><div><h1>📝 随手记事</h1><div class="date">这里是所有事项的来源。</div></div><button class="btn primary" onclick="openNote()">+ 新增记事</button></div>
+<div class="card"><div class="toolbar"><input class="input" id="notesSearch" placeholder="搜索笔记..." oninput="renderNotesPage()"><select class="input" id="notesTagFilter" onchange="renderNotesPage()"></select></div><div class="list-grid" id="notesPageList"></div></div>
+</section>
+
+<section class="page" id="page-todo">
+<div class="topbar"><div><h1>✅ To-Do List</h1><div class="date">自动读取「随手记事」的标题；事项只有「待处理」和「已完成」两个状态。</div></div></div>
+<div class="todo-board">
+<div class="todo-col"><h3>待处理</h3><div id="todoPending"></div></div>
+<div class="todo-col"><h3>已完成</h3><div id="todoDone"></div></div>
+</div>
+</section>
+
+<section class="page" id="page-calendar">
+<div class="topbar"><div><h1>📅 Calendar</h1><div class="date">只记录「随手记事」添加的日期和标题。</div></div></div>
+<div class="card"><div class="cal-head"><button class="mini" onclick="changeMonth(-1)">← 上个月</button><h2 id="calTitle" style="margin:0"></h2><button class="mini" onclick="changeMonth(1)">下个月 →</button></div><div class="cal-grid" id="calendarGrid"></div></div>
+</section>
+
+<section class="page" id="page-pinned">
+<div class="topbar"><div><h1>⭐ 重要事项置顶</h1><div class="date">只显示随手记事中标记为置顶的事项。</div></div></div><div class="list-grid" id="pinnedPageList"></div>
+</section>
+
+<section class="page" id="page-search">
+<div class="topbar"><div><h1>🔎 搜索</h1><div class="date">搜索随手记事。</div></div></div>
+<div class="card"><input class="input" id="globalSearch" placeholder="输入关键词..." oninput="renderSearchPage()"><div class="search-results" id="searchResults"></div></div>
+</section>
+
+<section class="page" id="page-tags">
+<div class="topbar"><div><h1>🏷️ 标签管理</h1><div class="date">建立自己的分类方式。</div></div></div>
+<div class="card"><div class="row" style="margin-bottom:18px"><input class="input" id="newTagInput" placeholder="新标签名称" style="max-width:360px"><button class="btn primary" onclick="addTag()">新增标签</button></div><div class="tag-wrap" id="tagManager"></div></div>
+</section>
+
+<section class="page" id="page-settings">
+<div class="topbar"><div><h1>⚙️ 备份 & 设置</h1><div class="date">管理 Notebook 数据。</div></div></div>
+<div class="card setting-block">
+
+<div class="setting-row">
+  <div><b>☁️ Back4App 云端同步</b><div class="muted" style="font-size:13px;margin-top:5px">登录后会自动同步。也可以手动刷新云端资料。</div></div>
+  <div class="row">
+    <button class="btn" onclick="loadCloudData()">从云端刷新</button>
+    <button class="btn" onclick="migrateLocalDataToCloud()">上传本机资料</button>
+  </div>
+</div>
+<div class="setting-row"><div><b>💾 备份全部资料</b><div class="muted" style="font-size:13px;margin-top:5px">保存随手记事、状态和标签。</div></div><button class="btn" onclick="exportBackup()">下载备份</button></div>
+<div class="setting-row"><div><b>📥 恢复备份</b><div class="muted" style="font-size:13px;margin-top:5px">恢复之前的数据。</div></div><button class="btn" onclick="document.getElementById('importFile').click()">选择文件</button></div>
+
+<div class="motto-editor">
+  <div class="row between">
+    <div>
+      <b>💬 我的标语</b>
+      <div class="muted" style="font-size:13px;margin-top:5px">可以随时更换；最多两行。保存后会显示在 Dashboard 右上角。</div>
+    </div>
+  </div>
+  <div style="margin-top:14px">
+    <label style="font-size:13px;font-weight:700">第一行</label>
+    <input class="input" id="mottoLine1" maxlength="60" placeholder="例如：Keep going,">
+  </div>
+  <div style="margin-top:10px">
+    <label style="font-size:13px;font-weight:700">第二行</label>
+    <input class="input" id="mottoLine2" maxlength="60" placeholder="例如：you are doing better than you think.">
+  </div>
+  <div class="row between" style="margin-top:14px">
+    <button class="btn" onclick="clearMotto()">清除标语</button>
+    <button class="btn primary" onclick="saveMotto()">保存标语</button>
+  </div>
+  <div class="muted" style="font-size:12px;margin:18px 0 7px">预览</div>
+  <div id="mottoPreview" class="motto-preview"></div>
+</div>
+
+<div class="setting-row"><div><b>🔒 登出</b><div class="muted" style="font-size:13px;margin-top:5px">不会删除资料。</div></div><button class="btn" onclick="logout()">登出</button></div>
+</div>
+</section>
+</main>
+</div>
+</section>
+
+<div id="cloudStatus" class="cloud-status">☁️ Cloud not configured</div>
+<input type="file" id="importFile" accept=".json,application/json" style="display:none">
+
+<div class="modal" id="noteModal">
+<div class="modal-box">
+<div class="row between"><h3 id="noteModalTitle">新增记事</h3><button class="mini" onclick="closeModal('noteModal')">✕</button></div>
+<div class="form-grid">
+<input id="noteId" type="hidden">
+<input class="input span2" id="noteTitle" placeholder="标题">
+<textarea class="span2" id="noteContent" placeholder="详细内容..."></textarea>
+<input class="input" id="noteDate" type="date">
+<div class="tag-select-box span2">
+      <div class="tag-select-title">选择标签（可多选）</div>
+      <div class="tag-checks" id="noteTagChecks"></div>
+    </div>
+<label class="row span2"><input type="checkbox" id="notePinned"> ⭐ 置顶</label>
+<label class="row span2"><input type="checkbox" id="noteUrgent"> 🚨 紧急事项</label>
+</div>
+<div class="row" style="justify-content:flex-end;margin-top:16px"><button class="btn" onclick="closeModal('noteModal')">取消</button><button class="btn primary" onclick="saveNote()">保存</button></div>
+</div>
+</div>
+
+
+
+<!-- CALENDAR DAY ITEMS MODAL -->
+<div class="modal" id="dayItemsModal">
+  <div class="modal-box">
+    <div class="row between">
+      <div>
+        <h3 id="dayItemsTitle" style="margin:0">📅 当天事项</h3>
+        <div id="dayItemsSub" style="font-size:12px;color:#998a82;margin-top:4px">
+          点击其中一项查看详情
+        </div>
+      </div>
+      <button class="mini" type="button" onclick="closeModal('dayItemsModal')">✕</button>
+    </div>
+    <div id="dayItemsList" class="day-list"></div>
+  </div>
+</div>
+
+<div class="modal" id="detailModal">
+  <div class="modal-box">
+    <div class="row between">
+      <h3 style="margin:0">📋 事项详情</h3>
+      <button class="mini" onclick="closeModal('detailModal')">✕</button>
+    </div>
+
+    <div class="detail-grid">
+      <div class="detail-label">标题</div>
+      <div class="detail-value" id="detailTitle"></div>
+
+      <div class="detail-label">日期</div>
+      <div class="detail-value" id="detailDate"></div>
+
+      <div class="detail-label">内容</div>
+      <div class="detail-value" id="detailContent"></div>
+
+      <div class="detail-label">标签</div>
+      <div class="detail-value"><div class="detail-tags" id="detailTags"></div></div>
+
+      <div class="detail-label">To-Do 状态</div>
+      <div class="detail-value" id="detailStatus"></div>
+
+      <div class="detail-label">重要置顶</div>
+      <div class="detail-value" id="detailPinned"></div>
+      <div class="detail-label">紧急程度</div>
+      <div class="detail-value" id="detailUrgent"></div>
+    </div>
+
+    <div class="row" style="justify-content:flex-end;margin-top:20px">
+      <button class="btn" onclick="closeModal('detailModal')">关闭</button>
+      <button class="btn primary" id="detailEditBtn">编辑记事</button>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal" id="urgentModal">
+  <div class="modal-box">
+    <div class="row between">
+      <h3 style="margin:0">🚨 紧急事项提醒</h3>
+      <button class="mini" onclick="closeModal('urgentModal')">✕</button>
+    </div>
+    <div class="muted" style="font-size:13px;margin-top:6px">以下事项尚未完成，请优先处理。</div>
+    <div id="urgentPopupList" class="urgent-popup-list"></div>
+    <div class="row" style="justify-content:flex-end;margin-top:18px">
+      <button class="btn" onclick="closeModal('urgentModal')">知道了</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* =========================
+   BACK4APP CONFIG
+   Fill in these 3 values from Back4App:
+   App Settings > Security & Keys / Server Settings
+   ========================= */
+const BACK4APP_APP_ID = "Ps8PWVdJcUGuPwLEyAXiDsqq1JGOhg2ED5sHqtb3";
+const BACK4APP_JAVASCRIPT_KEY = "grwR4bDPFMKmgVWv4vmJOxv4BNS8Ur6CvnvsRVHW";
+const BACK4APP_SERVER_URL = "https://parseapi.back4app.com/";
+
+const CLOUD_ENABLED =
+  BACK4APP_APP_ID &&
+  BACK4APP_JAVASCRIPT_KEY &&
+  !BACK4APP_APP_ID.startsWith("PASTE_") &&
+  !BACK4APP_JAVASCRIPT_KEY.startsWith("PASTE_");
+
+if (CLOUD_ENABLED) {
+  Parse.initialize(BACK4APP_APP_ID, BACK4APP_JAVASCRIPT_KEY);
+  Parse.serverURL = BACK4APP_SERVER_URL;
+}
+const VALID_ID="Derrick",VALID_PASSWORD="Derrick0311@",DATA_KEY="mr_derrick_notebook_linked_v1";
+let raw=localStorage.getItem(DATA_KEY);
+let state=raw?JSON.parse(raw):{notes:[],tags:['工作','私人','紧急','等回复','已处理'],motto:{line1:'',line2:''}};
+
+// migrate from prior version if available
+if(!raw){
+  let old=localStorage.getItem("mr_derrick_notebook_pages_v1");
+  if(old){
+    try{
+      let prev=JSON.parse(old);
+      state.notes=(prev.notes||[]).map(n=>({...n,status:'pending'}));
+      state.tags=prev.tags||state.tags;
+      localStorage.setItem(DATA_KEY,JSON.stringify(state));
+    }catch(e){}
+  }
+}
+state.notes=state.notes||[];state.tags=state.tags||[];
+state.notes.forEach(n=>{
+  if(!Array.isArray(n.tags)){
+    n.tags = n.tag ? [n.tag] : [];
+  }
+  delete n.tag;
+});
+state.motto=state.motto||{line1:'',line2:''};
+state.notes.forEach(n=>{if(!n.status||n.status==='doing')n.status='pending'});
+state.notes.forEach(n=>{if(typeof n.urgent!=='boolean') n.urgent=(n.tags||[]).includes('紧急')});
+state.motto=state.motto||{line1:'',line2:''};
+let cloudNoteMap = {};
+let cloudSettingsObject = null;
+let cloudSyncTimer = null;
+let calDate=new Date();
+
+function togglePassword(){password.type=password.type==='password'?'text':'password';toggleBtn.textContent=password.type==='password'?'显示':'隐藏'}
+
+function showLoginMsg(message,type='error'){
+  const el=document.getElementById('loginMsg');
+  if(!el)return;
+  el.textContent=message;
+  el.classList.add('show');
+  el.style.display='block';
+  el.style.background=type==='success'?'#eaf7ee':'#fde9e9';
+  el.style.border='1px solid '+(type==='success'?'#cce8d4':'#f1caca');
+  el.style.color=type==='success'?'#4d7b5c':'#a74b4b';
+}
+
+function clearLoginMsg(){
+  const el=document.getElementById('loginMsg');
+  if(!el)return;
+  el.classList.remove('show');
+  el.style.display='none';
+  el.textContent='';
+}
+
+function parseErrorMessage(err){
+  const code=err && typeof err.code!=='undefined' ? err.code : null;
+  const raw=err?.message||String(err||'连接失败');
+  if(code===101) return '❌ 账号或密码不正确。若第一次使用，请先建立云端账号。\n错误代码：101';
+  if(code===202) return '⚠️ 这个 ID 已经存在。请直接点「进入我的 Notebook」；如果仍进不到，代表密码与云端账号不一致。\n错误代码：202';
+  if(code===203) return '⚠️ Email 已经被使用。\n错误代码：203';
+  if(code===100) return '🌐 无法连接 Back4App。请检查网络，或确认网页不是被浏览器/防火墙拦截。\n错误代码：100';
+  if(code===107) return '⚠️ Back4App 返回参数格式错误。\n错误代码：107';
+  if(code===119) return '🔒 此 Back4App App 不允许目前这个操作。请检查 App Security 设置。\n错误代码：119';
+  if(code===209) return '🔐 登录状态已失效，请重新登录。\n错误代码：209';
+  return 'Back4App 返回错误：'+raw+(code!==null?'\n错误代码：'+code:'');
+}
+
+
+async function testBack4AppConnection(){
+  clearLoginMsg();
+  if(typeof Parse==='undefined'){
+    showLoginMsg('❌ Parse SDK 没有载入。请确认目前有网络连接。','error');
+    return;
+  }
+  try{
+    setCloudStatus('syncing','☁️ 测试连接...');
+    const TestObject=Parse.Object.extend('ConnectionTest');
+    const q=new Parse.Query(TestObject);
+    q.limit(1);
+    await q.find();
+    setCloudStatus('ok','☁️ Back4App 可连接');
+    showLoginMsg('✅ Back4App 服务器连接正常。App ID、JavaScript Key 和 Server URL 已经可以使用。','success');
+  }catch(err){
+    console.error('Connection test error:',err);
+    // Permission/class absence can still prove the server is reachable.
+    if(err && [119,101,209].includes(err.code)){
+      setCloudStatus('ok','☁️ 服务器已回应');
+      showLoginMsg('✅ Back4App 服务器有回应，但权限设置阻止了测试查询。\\n'+parseErrorMessage(err),'success');
+    }else{
+      setCloudStatus('error','☁️ 连接测试失败');
+      showLoginMsg(parseErrorMessage(err),'error');
+    }
+  }
+}
+
+async function signupCloudUser(){
+  clearLoginMsg();
+  const id=document.getElementById('userid').value.trim();
+  const pw=document.getElementById('password').value;
+
+  if(!id||!pw){
+    showLoginMsg('请先输入你要使用的 ID 和密码。','error');
+    return;
+  }
+  if(!CLOUD_ENABLED){
+    showLoginMsg('Back4App 连接资料尚未设置。','error');
+    return;
+  }
+  if(typeof Parse==='undefined'){
+    showLoginMsg('Parse SDK 没有载入，请确认电脑有网络连接。','error');
+    return;
+  }
+
+  setCloudStatus('syncing','☁️ 正在建立账号...');
+
+  let user;
+  try{
+    user=new Parse.User();
+    user.set('username',id);
+    user.set('password',pw);
+    await user.signUp();
+  }catch(err){
+    console.error('Back4App signup error:',err);
+
+    // If username already exists, don't pretend the cloud is broken.
+    if(err && err.code===202){
+      setCloudStatus('ok','☁️ 账号已存在');
+      showLoginMsg('✅ Derrick 云端账号已经存在。请直接点上面的「进入我的 Notebook」登录，不需要再建立账号。','success');
+      return;
+    }
+
+    setCloudStatus('error','☁️ 建立账号失败');
+    showLoginMsg(parseErrorMessage(err),'error');
+    return;
+  }
+
+  // At this point the Back4App _User account is DEFINITELY created.
+  if(document.getElementById('remember')?.checked){
+    localStorage.setItem('mr_derrick_remembered_id',id);
+  }
+  sessionStorage.setItem('mr_derrick_logged_in','true');
+  setCloudStatus('ok','☁️ 账号建立成功');
+  showLoginMsg('✅ 云端账号已经建立成功！正在进入 Notebook...','success');
+
+  // Do not report sync problems as signup problems.
+  try{
+    await initialiseFirstCloudWorkspace();
+  }catch(err){
+    console.warn('First workspace init warning:',err);
+  }
+
+  showApp();
+}
+
+async function initialiseFirstCloudWorkspace(){
+  if(!Parse.User.current()) return;
+  const user=Parse.User.current();
+
+  // Create/find settings first, ensuring the app has a cloud class.
+  const Settings=Parse.Object.extend('NotebookSettings');
+  const sq=new Parse.Query(Settings);
+  sq.equalTo('owner',user);
+
+  try{
+    cloudSettingsObject=await sq.first();
+  }catch(e){
+    cloudSettingsObject=null;
+  }
+
+  if(!cloudSettingsObject){
+    cloudSettingsObject=new Settings();
+    cloudSettingsObject.set('owner',user);
+    cloudSettingsObject.setACL(new Parse.ACL(user));
+    cloudSettingsObject.set('tags',state.tags||[]);
+    cloudSettingsObject.set('motto',state.motto||{line1:'',line2:''});
+    await cloudSettingsObject.save();
+  }
+
+  // If there is existing local data, upload it first instead of replacing it with empty cloud data.
+  if((state.notes||[]).length>0){
+    await syncAllToCloud();
+  }else{
+    await loadCloudData();
+  }
+}
+
+async function login(){
+  clearLoginMsg();
+  const id=document.getElementById('userid').value.trim();
+  const pw=document.getElementById('password').value;
+  const rememberBox=document.getElementById('remember');
+
+  if(!id||!pw){
+    showLoginMsg('请输入 ID 和密码。','error');
+    return;
+  }
+  if(!CLOUD_ENABLED){
+    showLoginMsg('Back4App 尚未设置 App ID / JavaScript Key。','error');
+    return;
+  }
+  if(typeof Parse==='undefined'){
+    showLoginMsg('Parse SDK 没有载入，请确认电脑有网络连接。','error');
+    return;
+  }
+
+  setCloudStatus('syncing','☁️ 正在登录...');
+
+  try{
+    await Parse.User.logIn(id,pw);
+  }catch(err){
+    console.error('Back4App login error:',err);
+    setCloudStatus('error','☁️ 登录失败');
+    showLoginMsg(parseErrorMessage(err),'error');
+    return;
+  }
+
+  // Authentication has succeeded.
+  if(rememberBox && rememberBox.checked){
+    localStorage.setItem('mr_derrick_remembered_id',id);
+  }
+  sessionStorage.setItem('mr_derrick_logged_in','true');
+  showLoginMsg('✅ 登录成功！正在进入 Notebook...','success');
+  setCloudStatus('ok','☁️ 登录成功');
+
+  // Cloud data sync is separate from authentication.
+  try{
+    await loadCloudData();
+    setCloudStatus('ok','☁️ 已同步');
+  }catch(err){
+    console.warn('Cloud load warning after successful login:',err);
+    setCloudStatus('error','☁️ 已登录 · 同步稍后重试');
+  }
+
+  showApp();
+}
+function showApp(){document.getElementById('loginScreen').style.display='none';document.getElementById('appScreen').style.display='block';renderAll();maybeShowUrgentOnLogin();setCloudStatus('ok','☁️ 已同步')}
+async function logout(){
+  try{ if(CLOUD_ENABLED && Parse.User.current()) await Parse.User.logOut(); }catch(e){console.warn(e)}
+  sessionStorage.removeItem('mr_derrick_logged_in');
+  sessionStorage.removeItem('urgent_popup_seen');
+  document.getElementById('appScreen').style.display='none';
+  document.getElementById('loginScreen').style.display='flex';
+  document.getElementById('password').value='';
+  setCloudStatus(CLOUD_ENABLED?'ok':'error',CLOUD_ENABLED?'☁️ 已登出':'☁️ Cloud not configured');
+}
+window.addEventListener('DOMContentLoaded',async()=>{
+  document.getElementById('todayText').textContent=new Intl.DateTimeFormat('zh-CN',{dateStyle:'full'}).format(new Date());
+  const remembered=localStorage.getItem('mr_derrick_remembered_id');
+  if(remembered){document.getElementById('userid').value=remembered;document.getElementById('remember').checked=true}
+
+  if(!CLOUD_ENABLED){
+    setCloudStatus('error','☁️ Back4App 未设置');
+    return;
+  }
+
+  if(typeof Parse==='undefined'){
+    setCloudStatus('error','☁️ SDK 载入失败');
+    showLoginMsg('无法载入 Back4App 登录组件，请确认目前有网络连接。','error');
+    return;
+  }
+
+  const current=Parse.User.current();
+  if(current){
+    try{
+      setCloudStatus('syncing','☁️ 正在同步...');
+      await loadCloudData();
+      sessionStorage.setItem('mr_derrick_logged_in','true');
+      showApp();
+    }catch(e){
+      console.error(e);
+      setCloudStatus('error','☁️ 同步失败');
+    }
+  }else{
+    setCloudStatus('ok','☁️ 等待登录');
+  }
+});
+password.addEventListener('keydown',e=>{if(e.key==='Enter')login()});
+
+function goPage(name){
+ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById('page-'+name).classList.add('active');
+ document.querySelectorAll('.nav button[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===name));
+ if(name==='notes')renderNotesPage();if(name==='todo')renderTodos();if(name==='calendar')renderCalendar();if(name==='pinned')renderPinnedPage();if(name==='search')renderSearchPage();if(name==='tags')renderTags();
+ window.scrollTo({top:0,behavior:'smooth'})
+}
+
+function setCloudStatus(kind,text){
+  const el=document.getElementById('cloudStatus');
+  if(!el)return;
+  el.className='cloud-status '+(kind||'');
+  el.textContent=text;
+}
+
+async function loadCloudData(){
+  if(!CLOUD_ENABLED || !Parse.User.current()) return;
+  setCloudStatus('syncing','☁️ 正在同步...');
+  const user=Parse.User.current();
+
+  // Notes
+  const Note=Parse.Object.extend('NotebookNote');
+  const q=new Parse.Query(Note);
+  q.equalTo('owner',user);
+  q.limit(1000);
+  q.ascending('createdAt');
+
+  let rows=[];
+  try{
+    rows=await q.find();
+  }catch(err){
+    // A brand-new app may not have NotebookNote class yet.
+    // Treat "class not found" / empty first-run cases as an empty notebook.
+    console.warn('NotebookNote first-load:',err);
+    rows=[];
+  }
+
+  cloudNoteMap={};
+  state.notes=rows.map(obj=>{
+    cloudNoteMap[obj.id]=obj;
+    return {
+      id:obj.id,
+      title:obj.get('title')||'',
+      content:obj.get('content')||'',
+      date:obj.get('date')||'',
+      tags:obj.get('tags')||[],
+      pinned:!!obj.get('pinned'),
+      urgent:!!obj.get('urgent'),
+      status:obj.get('status')||'pending',
+      updatedAt:obj.updatedAt?obj.updatedAt.getTime():Date.now()
+    };
+  });
+
+  // Settings
+  const Settings=Parse.Object.extend('NotebookSettings');
+  const sq=new Parse.Query(Settings);
+  sq.equalTo('owner',user);
+  cloudSettingsObject=await sq.first();
+
+  if(cloudSettingsObject){
+    state.tags=cloudSettingsObject.get('tags')||state.tags;
+    state.motto=cloudSettingsObject.get('motto')||state.motto||{line1:'',line2:''};
+  }else{
+    cloudSettingsObject=new Settings();
+    cloudSettingsObject.set('owner',user);
+    cloudSettingsObject.setACL(new Parse.ACL(user));
+    cloudSettingsObject.set('tags',state.tags);
+    cloudSettingsObject.set('motto',state.motto||{line1:'',line2:''});
+    await cloudSettingsObject.save();
+  }
+
+  localStorage.setItem(DATA_KEY,JSON.stringify(state));
+  renderAll();
+  setCloudStatus('ok','☁️ 已同步');
+}
+
+function scheduleCloudSync(){
+  if(!CLOUD_ENABLED || !Parse.User.current()) return;
+  clearTimeout(cloudSyncTimer);
+  setCloudStatus('syncing','☁️ 保存中...');
+  cloudSyncTimer=setTimeout(syncAllToCloud,500);
+}
+
+async function syncAllToCloud(){
+  if(!CLOUD_ENABLED || !Parse.User.current()) return;
+  const user=Parse.User.current();
+  try{
+    setCloudStatus('syncing','☁️ 保存中...');
+    const Note=Parse.Object.extend('NotebookNote');
+
+    const liveIds=new Set();
+    for(const n of state.notes){
+      let obj=cloudNoteMap[n.id];
+      if(!obj){
+        obj=new Note();
+        obj.set('owner',user);
+        obj.setACL(new Parse.ACL(user));
+      }
+      obj.set('title',n.title||'');
+      obj.set('content',n.content||'');
+      obj.set('date',n.date||'');
+      obj.set('tags',Array.isArray(n.tags)?n.tags:[]);
+      obj.set('pinned',!!n.pinned);
+      obj.set('urgent',!!n.urgent);
+      obj.set('status',n.status||'pending');
+      await obj.save();
+      cloudNoteMap[obj.id]=obj;
+      liveIds.add(obj.id);
+
+      // Replace temporary local id with Parse object id after first save.
+      if(n.id!==obj.id){
+        delete cloudNoteMap[n.id];
+        n.id=obj.id;
+      }
+    }
+
+    // Delete cloud notes removed locally.
+    const toDelete=[];
+    Object.entries(cloudNoteMap).forEach(([id,obj])=>{
+      if(!liveIds.has(id)) toDelete.push(obj);
+    });
+    if(toDelete.length){
+      await Parse.Object.destroyAll(toDelete);
+      toDelete.forEach(o=>delete cloudNoteMap[o.id]);
+    }
+
+    // Settings
+    const Settings=Parse.Object.extend('NotebookSettings');
+    if(!cloudSettingsObject){
+      cloudSettingsObject=new Settings();
+      cloudSettingsObject.set('owner',user);
+      cloudSettingsObject.setACL(new Parse.ACL(user));
+    }
+    cloudSettingsObject.set('tags',state.tags||[]);
+    cloudSettingsObject.set('motto',state.motto||{line1:'',line2:''});
+    await cloudSettingsObject.save();
+
+    localStorage.setItem(DATA_KEY,JSON.stringify(state));
+    setCloudStatus('ok','☁️ 已保存');
+  }catch(err){
+    console.error('Back4App sync error:',err);
+    setCloudStatus('error','☁️ 保存失败');
+  }
+}
+
+async function migrateLocalDataToCloud(){
+  if(!CLOUD_ENABLED || !Parse.User.current()) return;
+  if(!confirm('把这台设备目前的本机 Notebook 资料上传到 Back4App 吗？')) return;
+  await syncAllToCloud();
+  alert('本机资料已上传到云端 ✅');
+}
+
+function persist(){
+  localStorage.setItem(DATA_KEY,JSON.stringify(state));
+  renderAll();
+  scheduleCloudSync();
+}
+function esc(s=''){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,8)}
+function todayStr(){let d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function isOverdue(n){return n.status!=='done'&&n.date&&n.date<todayStr()}
+function closeModal(x){document.getElementById(x).classList.remove('show')}
+
+function fillTags(selected=[]){
+ let current=notesTagFilter.value||'';
+ notesTagFilter.innerHTML='<option value="">全部标签</option>'+state.tags.map(t=>`<option>${esc(t)}</option>`).join('');
+ if(state.tags.includes(current)) notesTagFilter.value=current;
+
+ const box=document.getElementById('noteTagChecks');
+ if(box){
+   box.innerHTML=state.tags.length
+     ? state.tags.map(t=>`<label class="tag-option"><input type="checkbox" name="noteTags" value="${esc(t)}" ${selected.includes(t)?'checked':''}> ${esc(t)}</label>`).join('')
+     : '<div class="empty">还没有标签，请先到「标签管理」新增。</div>';
+ }
+}
+function getSelectedNoteTags(){
+ return [...document.querySelectorAll('input[name="noteTags"]:checked')].map(x=>x.value);
+}
+function openNote(n=null){
+ fillTags(n?.tags||[]);
+ noteModalTitle.textContent=n?'编辑记事':'新增记事';
+ noteId.value=n?.id||'';
+ noteTitle.value=n?.title||'';
+ noteContent.value=n?.content||'';
+ noteDate.value=n?.date||todayStr();
+ notePinned.checked=!!n?.pinned;
+ noteModal.classList.add('show')
+}
+function saveNote(){
+ let id=noteId.value||uid(),old=state.notes.find(x=>x.id===id);
+ let item={
+   id,
+   title:noteTitle.value.trim()||'未命名记事',
+   content:noteContent.value.trim(),
+   date:noteDate.value,
+   tags:getSelectedNoteTags(),
+   pinned:notePinned.checked,
+   urgent:noteUrgent.checked,
+   status:old?.status||'pending',
+   updatedAt:Date.now()
+ };
+ let i=state.notes.findIndex(x=>x.id===id);
+ i>=0?state.notes[i]=item:state.notes.unshift(item);
+ closeModal('noteModal');
+ persist()
+}
+function deleteNote(id){if(confirm('删除这则记事后，To-Do 和 Calendar 里的对应项目也会一起消失。确定删除吗？')){state.notes=state.notes.filter(x=>x.id!==id);persist()}}
+function togglePinNote(id){let n=state.notes.find(x=>x.id===id);if(n){n.pinned=!n.pinned;persist()}}
+function nextStatus(id){let n=state.notes.find(x=>x.id===id);if(n){n.status=n.status==='done'?'pending':'done';persist()}}
+
+function tagChips(n){
+ const tags=Array.isArray(n.tags)?n.tags:[];
+ return tags.length?`<div class="chips">${tags.map(t=>`<span class="chip ${t==='紧急'?'urgent-chip':''}">${esc(t)}</span>`).join('')}</div>`:'';
+}
+function noteCard(n){
+ return `<div class="item">
+   <div class="item-title">${n.pinned?'⭐ ':''}${esc(n.title)}</div>
+   <div class="item-meta">${esc(n.date||'')}</div>
+   <div class="muted" style="font-size:13px;margin-top:8px;white-space:pre-wrap">${esc(n.content)}</div>
+   ${tagChips(n)}
+   <div class="actions">
+     <button class="mini" onclick='openNote(${JSON.stringify(n)})'>编辑</button>
+     <button class="mini" onclick="togglePinNote('${n.id}')">${n.pinned?'取消置顶':'置顶'}</button>
+     <button class="mini warn" onclick="deleteNote('${n.id}')">删除</button>
+   </div>
+ </div>`
+}
+function todoCard(n){
+ return `<div class="item">
+   <div class="item-title ${n.status==='done'?'done':''}">${esc(n.title)}</div>
+   <div class="item-meta ${isOverdue(n)?'overdue':''}">${isOverdue(n)?'⚠️ 已逾期 · ':''}${esc(n.date||'')}</div>
+   ${tagChips(n)}
+   <div class="actions"><button class="mini" onclick="nextStatus('${n.id}')">切换状态</button></div>
+ </div>`
+}
+
+function getUrgentOpen(){
+  return state.notes.filter(n=>n.urgent && n.status!=='done');
+}
+function renderUrgent(){
+  const list=getUrgentOpen();
+  const banner=document.getElementById('urgentBanner');
+  const txt=document.getElementById('urgentBannerText');
+  if(banner && txt){
+    if(list.length){
+      banner.classList.add('show');
+      txt.textContent=`🚨 你有 ${list.length} 项紧急事项待处理`;
+    }else{
+      banner.classList.remove('show');
+    }
+  }
+}
+function openUrgentPopup(){
+  const list=getUrgentOpen();
+  urgentPopupList.innerHTML=list.length
+    ? list.map(n=>`<div class="urgent-popup-item">
+        <b>🚨 ${esc(n.title)}</b>
+        <div class="muted" style="font-size:12px">${esc(n.date||'未设置日期')}</div>
+        ${tagChips(n)}
+      </div>`).join('')
+    : '<div class="empty">目前没有紧急未完成事项 🎉</div>';
+  urgentModal.classList.add('show');
+}
+function maybeShowUrgentOnLogin(){
+  const list=getUrgentOpen();
+  if(list.length && sessionStorage.getItem('urgent_popup_seen')!=='1'){
+    sessionStorage.setItem('urgent_popup_seen','1');
+    setTimeout(openUrgentPopup,450);
+  }
+}
+function renderDashboard(){
+ dashNotes.textContent=state.notes.length;dashTodos.textContent=state.notes.filter(n=>n.status!=='done').length;dashPins.textContent=state.notes.filter(n=>n.pinned).length;dashOverdue.textContent=state.notes.filter(isOverdue).length;
+ let d=todayStr(),items=state.notes.filter(n=>n.date===d);dashToday.innerHTML=items.length?items.slice(0,5).map(n=>`<div class="item-meta" style="padding:7px 0">${n.status==='done'?'✅':'📝'} ${esc(n.title)}</div>`).join(''):'<div class="empty">今天没有特别事项 ✨</div>'
+}
+function renderNotesPage(){
+ fillTags();let q=(notesSearch.value||'').toLowerCase(),tag=notesTagFilter.value;
+ let list=state.notes.filter(n=>(!q||[n.title,n.content,(n.tags||[]).join(' ')].join(' ').toLowerCase().includes(q))&&(!tag||(n.tags||[]).includes(tag)));
+ notesPageList.innerHTML=list.length?list.map(noteCard).join(''):'<div class="empty">暂无笔记。</div>'
+}
+function renderTodos(){
+ todoPending.innerHTML=state.notes.filter(n=>n.status!=='done').map(todoCard).join('')||'<div class="empty">暂无</div>';
+ todoDone.innerHTML=state.notes.filter(n=>n.status==='done').map(todoCard).join('')||'<div class="empty">暂无</div>'
+}
+function renderPinnedPage(){let items=state.notes.filter(n=>n.pinned);pinnedPageList.innerHTML=items.length?items.map(noteCard).join(''):'<div class="empty">还没有置顶事项。</div>'}
+function renderSearchPage(){let q=(globalSearch.value||'').trim().toLowerCase();if(!q){searchResults.innerHTML='<div class="empty">输入关键词开始搜索。</div>';return}let ns=state.notes.filter(n=>[n.title,n.content,(n.tags||[]).join(' '),n.date].join(' ').toLowerCase().includes(q));searchResults.innerHTML=ns.length?ns.map(noteCard).join(''):'<div class="empty">找不到相关内容。</div>'}
+function addTag(){let t=newTagInput.value.trim();if(t&&!state.tags.includes(t)){state.tags.push(t);newTagInput.value='';persist()}}
+function removeTag(t){if(confirm(`删除标签「${t}」吗？`)){state.tags=state.tags.filter(x=>x!==t);state.notes.forEach(n=>{n.tags=(n.tags||[]).filter(x=>x!==t)});persist()}}
+function renderTags(){tagManager.innerHTML=state.tags.length?state.tags.map(t=>`<span class="tag-pill">${esc(t)} <button class="mini" onclick="removeTag('${esc(t)}')" style="padding:2px 6px">×</button></span>`).join(''):'<div class="empty">还没有标签。</div>'}
+
+
+function openDetail(id){
+  const n=state.notes.find(x=>x.id===id);
+  if(!n) return;
+
+  detailTitle.textContent=n.title||'未命名记事';
+  detailDate.textContent=n.date||'未设置日期';
+  detailContent.textContent=n.content||'没有填写详细内容';
+
+  const tags=Array.isArray(n.tags)?n.tags:[];
+  detailTags.innerHTML=tags.length
+    ? tags.map(t=>`<span class="detail-tag">${esc(t)}</span>`).join('')
+    : '<span class="muted">无标签</span>';
+
+  detailStatus.textContent=n.status==='done'?'✅ 已完成':'🕒 待处理';
+  detailPinned.textContent=n.pinned?'⭐ 已置顶':'未置顶';
+  detailUrgent.textContent=n.urgent&&n.status!=='done'?'🚨 紧急':'一般';
+
+  detailEditBtn.onclick=()=>{
+    closeModal('detailModal');
+    openNote(n);
+  };
+
+  detailModal.classList.add('show');
+}
+
+function renderCalendar(){
+  const y=calDate.getFullYear();
+  const m=calDate.getMonth();
+
+  calTitle.textContent=`${y}年 ${m+1}月`;
+
+  const first=new Date(y,m,1);
+  const startIndex=(first.getDay()+6)%7;
+  const daysInMonth=new Date(y,m+1,0).getDate();
+  const prevMonthDays=new Date(y,m,0).getDate();
+
+  const cells=['一','二','三','四','五','六','日']
+    .map(d=>`<div class="dow">${d}</div>`);
+
+  const today=todayStr();
+
+  for(let i=0;i<42;i++){
+    let d, cellMonth=m, other=false;
+
+    if(i<startIndex){
+      d=prevMonthDays-startIndex+i+1;
+      cellMonth=m-1;
+      other=true;
+    }else if(i>=startIndex+daysInMonth){
+      d=i-startIndex-daysInMonth+1;
+      cellMonth=m+1;
+      other=true;
+    }else{
+      d=i-startIndex+1;
+    }
+
+    const dt=new Date(y,cellMonth,d);
+    const ds=
+      dt.getFullYear()+'-'+
+      String(dt.getMonth()+1).padStart(2,'0')+'-'+
+      String(dt.getDate()).padStart(2,'0');
+
+    const allEvents=state.notes.filter(n=>n.date===ds);
+    const preview=allEvents.slice(0,3);
+
+    const previewHtml=preview.map(n=>`
+      <div class="event ${n.urgent&&n.status!=='done'?'calendar-urgent':''}">
+        ${n.urgent&&n.status!=='done'?'🚨':'📝'} ${esc(n.title)}
+      </div>
+    `).join('');
+
+    const moreHtml=allEvents.length>3
+      ? `<div class="day-event-count">＋ 还有 ${allEvents.length-3} 项</div>`
+      : '';
+
+    cells.push(`
+      <div class="day ${other?'other':''} ${ds===today?'today':''}"
+           ${other?'':`data-date="${ds}" role="button" tabindex="0" aria-label="${ds}，${allEvents.length}项记录"`}>
+        <div class="daynum">${d}</div>
+        ${previewHtml}
+        ${moreHtml}
+      </div>
+    `);
+  }
+
+  calendarGrid.innerHTML=cells.join('');
+  bindCalendarDayClicks();
+}
+
+function bindCalendarDayClicks(){
+  const grid=document.getElementById('calendarGrid');
+  if(!grid) return;
+
+  grid.querySelectorAll('.day[data-date]').forEach(cell=>{
+    cell.onclick=()=>openDayItems(cell.getAttribute('data-date'));
+
+    cell.onkeydown=e=>{
+      if(e.key==='Enter' || e.key===' '){
+        e.preventDefault();
+        openDayItems(cell.getAttribute('data-date'));
+      }
+    };
+  });
+}
+
+function openDayItems(dateStr){
+  const modal=document.getElementById('dayItemsModal');
+  const titleEl=document.getElementById('dayItemsTitle');
+  const subEl=document.getElementById('dayItemsSub');
+  const listEl=document.getElementById('dayItemsList');
+
+  if(!modal || !titleEl || !subEl || !listEl){
+    console.error('Calendar day modal elements are missing');
+    alert('Calendar 弹窗载入失败，请重新打开页面。');
+    return;
+  }
+
+  const list=state.notes
+    .filter(n=>n.date===dateStr)
+    .sort((a,b)=>{
+      if(a.status!==b.status) return a.status==='done'?1:-1;
+      if(Boolean(a.urgent)!==Boolean(b.urgent)) return a.urgent?-1:1;
+      return (b.updatedAt||0)-(a.updatedAt||0);
+    });
+
+  const [yy,mm,dd]=dateStr.split('-').map(Number);
+
+  titleEl.textContent=`📅 ${yy}年${mm}月${dd}日`;
+  subEl.textContent=list.length
+    ? `当天共有 ${list.length} 项 · 点击其中一项查看详情`
+    : '当天没有记录';
+
+  if(!list.length){
+    listEl.innerHTML='<div class="empty">这一天还没有事项。</div>';
+  }else{
+    listEl.innerHTML=list.map(n=>`
+      <button type="button"
+              class="day-list-item ${n.urgent&&n.status!=='done'?'urgent':''}"
+              data-note-id="${esc(n.id)}">
+        <div class="day-list-title">
+          ${n.urgent&&n.status!=='done'?'🚨 ':''}
+          ${n.pinned?'⭐ ':''}
+          ${esc(n.title)}
+        </div>
+        <div class="day-list-meta">
+          ${n.status==='done'?'✅ 已完成':'🕒 待处理'}
+          ${(n.tags||[]).length?' · '+(n.tags||[]).map(esc).join(' · '):''}
+        </div>
+      </button>
+    `).join('');
+
+    listEl.querySelectorAll('[data-note-id]').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const noteId=btn.getAttribute('data-note-id');
+        modal.classList.remove('show');
+        setTimeout(()=>openDetail(noteId),50);
+      });
+    });
+  }
+
+  modal.classList.add('show');
+}
+
+function changeMonth(n){calDate=new Date(calDate.getFullYear(),calDate.getMonth()+n,1);renderCalendar()}
+
+function exportBackup(){let payload={app:'MR DERRICK NOTEBOOK',version:3,exportedAt:new Date().toISOString(),data:state};let blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='MR_DERRICK_NOTEBOOK_BACKUP_'+todayStr()+'.json';a.click();URL.revokeObjectURL(a.href)}
+importFile.addEventListener('change',e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let obj=JSON.parse(r.result),data=obj.data||obj;if(!Array.isArray(data.notes)||!Array.isArray(data.tags))throw 0;data.notes.forEach(n=>{if(!n.status)n.status='pending';if(!Array.isArray(n.tags))n.tags=n.tag?[n.tag]:[];delete n.tag;});if(confirm('恢复备份会覆盖当前资料，确定吗？')){state=data;persist();alert('恢复成功 ✅')}}catch{alert('备份文件格式不正确。')}importFile.value=''};r.readAsText(f)})
+
+
+function renderMotto(){
+  state.motto=state.motto||{line1:'',line2:''};
+  const text=[state.motto.line1||'',state.motto.line2||''].filter(Boolean).join('\n');
+  const display=document.getElementById('mottoDisplay');
+  const preview=document.getElementById('mottoPreview');
+  const l1=document.getElementById('mottoLine1');
+  const l2=document.getElementById('mottoLine2');
+  if(display) display.textContent=text;
+  if(preview) preview.textContent=text || '你的两行标语会显示在这里。';
+  if(l1 && document.activeElement!==l1) l1.value=state.motto.line1||'';
+  if(l2 && document.activeElement!==l2) l2.value=state.motto.line2||'';
+}
+function saveMotto(){
+  state.motto={
+    line1:(document.getElementById('mottoLine1')?.value||'').trim(),
+    line2:(document.getElementById('mottoLine2')?.value||'').trim()
+  };
+  persist();
+  alert('标语已保存 ✨');
+}
+function clearMotto(){
+  state.motto={line1:'',line2:''};
+  persist();
+}
+document.addEventListener('input',e=>{
+  if(e.target && (e.target.id==='mottoLine1'||e.target.id==='mottoLine2')){
+    const a=document.getElementById('mottoLine1')?.value.trim()||'';
+    const b=document.getElementById('mottoLine2')?.value.trim()||'';
+    const p=document.getElementById('mottoPreview');
+    if(p) p.textContent=[a,b].filter(Boolean).join('\n') || '你的两行标语会显示在这里。';
+  }
+});
+
+function renderAll(){renderMotto();renderUrgent();renderDashboard();renderNotesPage();renderTodos();renderPinnedPage();renderTags();renderCalendar();renderSearchPage()}
+</script>
+</body>
+</html>
