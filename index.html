@@ -1219,6 +1219,94 @@ button,input,textarea,select{font-family:"LXGW WenKai TC","KaiTi","STKaiti","DFK
   .weekly-tools{grid-column:1 !important}
 }
 
+
+/* ===== PHONE MODAL FIX: SAVE BUTTON ALWAYS REACHABLE ===== */
+@media (max-width:820px){
+  #plannerTaskModal{
+    align-items:flex-end !important;
+    padding:0 !important;
+    overflow:hidden !important;
+  }
+
+  #plannerTaskModal .modal-box{
+    width:100% !important;
+    max-width:none !important;
+    max-height:calc(100dvh - 92px) !important;
+    height:auto !important;
+    margin:0 !important;
+    border-radius:24px 24px 0 0 !important;
+    padding:0 !important;
+    overflow:hidden !important;
+    display:flex !important;
+    flex-direction:column !important;
+    background:#fff !important;
+  }
+
+  /* Header */
+  #plannerTaskModal .modal-box > .row.between:first-child{
+    flex:0 0 auto !important;
+    padding:18px 18px 12px !important;
+    background:#fff !important;
+    border-bottom:1px solid #eee4df !important;
+    position:sticky !important;
+    top:0 !important;
+    z-index:3 !important;
+  }
+
+  /* Scrollable form body */
+  #plannerTaskModal .modal-box > div[style*="display:grid"]{
+    flex:1 1 auto !important;
+    overflow-y:auto !important;
+    -webkit-overflow-scrolling:touch !important;
+    margin:0 !important;
+    padding:14px 18px 18px !important;
+    min-height:0 !important;
+  }
+
+  /* Bottom action bar */
+  #plannerTaskModal .modal-box > .row[style*="justify-content:space-between"]{
+    flex:0 0 auto !important;
+    position:sticky !important;
+    bottom:0 !important;
+    z-index:4 !important;
+    margin:0 !important;
+    padding:12px 18px calc(14px + env(safe-area-inset-bottom)) !important;
+    background:rgba(255,255,255,.98) !important;
+    border-top:1px solid #eadfd8 !important;
+    box-shadow:0 -8px 22px rgba(72,52,44,.08) !important;
+  }
+
+  #plannerTaskModal .modal-box > .row[style*="justify-content:space-between"] > .row{
+    width:100% !important;
+    margin-left:0 !important;
+    display:grid !important;
+    grid-template-columns:1fr 1fr !important;
+    gap:10px !important;
+  }
+
+  #plannerTaskModal .modal-box > .row[style*="justify-content:space-between"] .btn{
+    min-height:48px !important;
+    width:100% !important;
+    font-size:15px !important;
+    border-radius:14px !important;
+  }
+
+  #plannerTaskModal #plannerDeleteBtn{
+    width:100% !important;
+    min-height:44px !important;
+    margin-bottom:8px !important;
+  }
+
+  /* Keep bottom app navigation below modal */
+  .modal.show{
+    z-index:200 !important;
+  }
+
+  .mobile-bottom-nav{
+    z-index:90 !important;
+  }
+}
+
 </style>
 <script src="https://npmcdn.com/parse/dist/parse.min.js"></script>
 </head>
@@ -1474,7 +1562,7 @@ button,input,textarea,select{font-family:"LXGW WenKai TC","KaiTi","STKaiti","DFK
     </div>
     <div class="row" style="justify-content:space-between;margin-top:16px">
       <button class="btn warn" id="plannerDeleteBtn" type="button" onclick="deletePlannerTask()" style="display:none">删除</button>
-      <div class="row" style="margin-left:auto"><button class="btn" type="button" onclick="closeModal('plannerTaskModal')">取消</button><button class="btn primary" type="button" onclick="savePlannerTask()">保存</button></div>
+      <div class="row" style="margin-left:auto"><button class="btn" type="button" onclick="closeModal('plannerTaskModal')">取消</button><button class="btn primary" type="button" onclick="savePlannerTask()">✓ 保存事项</button></div>
     </div>
   </div>
 </div>
