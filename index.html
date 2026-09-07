@@ -984,327 +984,52 @@ button,input,textarea,select{font-family:"LXGW WenKai TC","KaiTi","STKaiti","DFK
 }
 
 
-/* =========================================================
-   LOCKED RESPONSIVE EDITION — DESKTOP / TABLET / PHONE
-   ========================================================= */
-
-/* Tablet: 821px–1180px */
-@media (min-width:821px) and (max-width:1180px){
-  .sidebar{
-    width:205px !important;
-    min-width:205px !important;
-    padding-left:16px !important;
-    padding-right:16px !important;
-  }
-  .main{
-    margin-left:205px !important;
-    width:calc(100% - 205px) !important;
-    padding:24px 18px 30px !important;
-  }
-  .page-head h1{font-size:30px !important}
-  .weekly-shell{
-    padding:14px !important;
-    overflow:hidden !important;
-  }
-  .weekly-toolbar{
-    grid-template-columns:auto 1fr !important;
-    gap:10px !important;
-  }
-  .weekly-month,
-  .month-title-main{
-    font-size:25px !important;
-  }
-  .weekly-tools{
-    grid-column:1/-1;
-    display:flex !important;
-    justify-content:flex-end !important;
-  }
-  #weeklyGrid.week-grid{
-    min-width:0 !important;
-    width:100% !important;
-  }
-  #weeklyGrid .month-week-row{
-    min-width:0 !important;
-    width:100% !important;
-    grid-template-columns:repeat(7,minmax(0,1fr)) !important;
-  }
-  #weeklyGrid .month-week-row .week-col{
-    min-width:0 !important;
-    min-height:155px !important;
-  }
-  #weeklyGrid .month-week-row .week-day-body{
-    min-height:98px !important;
-    padding:5px !important;
-  }
-  .week-day-head{
-    min-height:52px !important;
-    padding:6px 4px !important;
-  }
-  .week-day-name{font-size:11px !important}
-  .week-day-date{font-size:15px !important}
-  .week-task{
-    padding:6px !important;
-    gap:5px !important;
-  }
-  .week-task .week-check{
-    width:14px !important;
-    height:14px !important;
-    min-width:14px !important;
-  }
-  .week-task-time{font-size:9px !important}
-  .week-task-titleline{font-size:10px !important}
-  .week-add-line{
-    padding:6px 3px !important;
-    font-size:10px !important;
-  }
+@media (min-width:821px) and (max-width:1366px){
+  html,body{overflow-x:hidden!important}
+  .app{display:grid!important;grid-template-columns:220px minmax(0,1fr)!important;width:100%!important;max-width:none!important}
+  .sidebar{width:220px!important;min-width:220px!important;max-width:220px!important;padding:24px 14px!important;position:sticky!important;top:0!important;left:0!important;height:100vh!important}
+  .logo{font-size:24px!important;margin-left:4px!important}
+  .subtitle{margin-left:4px!important;margin-bottom:24px!important}
+  .nav button{font-size:15px!important;padding:11px 12px!important}
+  .main{width:100%!important;max-width:none!important;min-width:0!important;margin:0!important;padding:22px 24px 32px!important}
+  .dashboard-head{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;gap:16px!important;align-items:start!important;margin-bottom:16px!important}
+  .greeting h1{font-size:31px!important;margin:0!important}
+  .dashboard-head .new-btn{justify-self:end!important;align-self:start!important}
+  .motto-card{grid-column:1/-1!important;width:100%!important;max-width:none!important;min-width:0!important;margin:0!important;box-sizing:border-box!important}
+  .urgent-banner{width:100%!important;margin-left:0!important;margin-right:0!important}
+  .hero-grid{display:grid!important;grid-template-columns:minmax(0,1.45fr) minmax(260px,.75fr)!important;gap:16px!important;width:100%!important}
+  .hero-card,.today-card{min-width:0!important}
+  .hero-card{padding:24px!important}
+  .hero-copy h2{font-size:29px!important}
+  .hero-copy p{font-size:14px!important}
+  .stats{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:12px!important;width:100%!important}
+  .stat-card{min-width:0!important;padding:16px 18px!important}
+  .shortcuts{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:12px!important;width:100%!important}
+  .shortcut-card{min-width:0!important;min-height:135px!important;padding:18px!important}
+  .weekly-shell{width:100%!important;max-width:none!important;min-width:0!important;overflow:hidden!important;padding:14px!important}
+  .weekly-toolbar{display:grid!important;grid-template-columns:auto minmax(0,1fr)!important;align-items:center!important;gap:10px 14px!important}
+  .month-title-main,.weekly-month{text-align:center!important;font-size:26px!important;min-width:0!important}
+  .weekly-tools{grid-column:1/-1!important;display:flex!important;justify-content:flex-end!important;gap:8px!important;flex-wrap:wrap!important}
+  #weeklyTagFilter{min-width:220px!important;flex:1 1 220px!important}
+  #weeklyGrid.week-grid{display:block!important;width:100%!important;min-width:0!important;overflow:visible!important}
+  #weeklyGrid .month-week-row{display:grid!important;grid-template-columns:repeat(7,minmax(0,1fr))!important;width:100%!important;min-width:0!important}
+  #weeklyGrid .month-week-row .week-col{min-width:0!important;width:auto!important;min-height:150px!important}
+  #weeklyGrid .month-week-row .week-day-head{min-height:50px!important;padding:6px 4px!important}
+  #weeklyGrid .month-week-row .week-day-body{min-height:95px!important;padding:5px!important}
+  .week-day-name{font-size:11px!important}.week-day-date{font-size:15px!important}
+  .week-task{padding:6px!important;gap:5px!important}
+  .week-task .week-check{width:14px!important;height:14px!important;min-width:14px!important}
+  .week-task-time{font-size:9px!important}.week-task-titleline{font-size:10px!important}
+  .week-add-line{font-size:9px!important;padding:6px 2px!important}
+  .modal-box{width:min(680px,92vw)!important;max-height:85vh!important;overflow:auto!important}
 }
-
-/* Phone: dedicated app-like layout */
-@media (max-width:820px){
-  body{
-    overflow-x:hidden !important;
-    padding-bottom:82px !important;
-  }
-  .sidebar{display:none !important}
-  .mobile-topbar{display:flex !important}
-  .mobile-bottom-nav{display:grid !important}
-
-  .main{
-    width:100% !important;
-    margin:0 !important;
-    padding:76px 10px 24px !important;
-  }
-
-  .page-head{
-    margin-bottom:10px !important;
-  }
-  .page-head h1{
-    font-size:25px !important;
-  }
-  .page-sub{
-    font-size:11px !important;
-  }
-
-  .weekly-shell{
-    padding:10px !important;
-    border-radius:18px !important;
-    overflow:visible !important;
-  }
-
-  .weekly-toolbar{
-    display:grid !important;
-    grid-template-columns:auto 1fr !important;
-    gap:8px !important;
-    align-items:center !important;
-  }
-
-  .month-title-main,
-  .weekly-month{
-    text-align:right !important;
-    font-size:20px !important;
-  }
-
-  .weekly-tools{
-    grid-column:1/-1 !important;
-    display:grid !important;
-    grid-template-columns:1fr 1fr 1fr !important;
-    gap:6px !important;
-  }
-
-  #weeklyTagFilter{
-    grid-column:1/-1 !important;
-    width:100% !important;
-  }
-
-  .week-btn{
-    padding:8px 5px !important;
-    font-size:11px !important;
-  }
-
-  /* On phones, each week scrolls horizontally.
-     This keeps every calendar day large enough to read/tap. */
-  #weeklyGrid.week-grid{
-    display:block !important;
-    width:100% !important;
-    min-width:0 !important;
-    overflow:visible !important;
-  }
-
-  #weeklyGrid .month-week-row{
-    display:grid !important;
-    grid-template-columns:repeat(7,112px) !important;
-    width:max-content !important;
-    min-width:784px !important;
-    margin-bottom:8px !important;
-    overflow:hidden !important;
-  }
-
-  #weeklyGrid{
-    overflow-x:auto !important;
-    overscroll-behavior-x:contain;
-    -webkit-overflow-scrolling:touch;
-    padding-bottom:5px;
-  }
-
-  #weeklyGrid .month-week-row .week-col{
-    width:112px !important;
-    min-width:112px !important;
-    min-height:145px !important;
-  }
-
-  #weeklyGrid .month-week-row .week-day-head{
-    min-height:48px !important;
-    padding:5px 3px !important;
-  }
-
-  #weeklyGrid .month-week-row .week-day-body{
-    min-height:96px !important;
-    padding:5px !important;
-  }
-
-  .week-day-name{font-size:10px !important}
-  .week-day-date{font-size:14px !important}
-
-  .week-task{
-    padding:6px !important;
-    gap:5px !important;
-    border-radius:8px !important;
-  }
-  .week-task .week-check{
-    width:14px !important;
-    height:14px !important;
-    min-width:14px !important;
-  }
-  .week-task-time{
-    font-size:9px !important;
-    margin-bottom:2px !important;
-  }
-  .week-task-titleline{
-    font-size:10px !important;
-    line-height:1.25 !important;
-  }
-  .week-add-line{
-    padding:6px 2px !important;
-    font-size:9px !important;
-  }
-
-  .modal{
-    padding:8px !important;
-    align-items:flex-end !important;
-  }
-  .modal-box{
-    width:100% !important;
-    max-width:none !important;
-    max-height:88vh !important;
-    overflow:auto !important;
-    border-radius:24px 24px 14px 14px !important;
-  }
-  .planner-modal-row{
-    grid-template-columns:1fr !important;
-  }
-
-  .cloud-status{
-    bottom:82px !important;
-    right:10px !important;
-  }
-}
-
-/* Smaller phones */
-@media (max-width:430px){
-  .mobile-brand-title{font-size:14px !important}
-  .mobile-add-btn{padding:9px 10px !important;font-size:11px !important}
-  .main{padding-left:8px !important;padding-right:8px !important}
-  .weekly-toolbar{grid-template-columns:1fr !important}
-  .month-title-main,.weekly-month{text-align:left !important}
-  .weekly-tools{grid-column:1 !important}
-}
-
-
-/* ===== PHONE MODAL FIX: SAVE BUTTON ALWAYS REACHABLE ===== */
-@media (max-width:820px){
-  #plannerTaskModal{
-    align-items:flex-end !important;
-    padding:0 !important;
-    overflow:hidden !important;
-  }
-
-  #plannerTaskModal .modal-box{
-    width:100% !important;
-    max-width:none !important;
-    max-height:calc(100dvh - 92px) !important;
-    height:auto !important;
-    margin:0 !important;
-    border-radius:24px 24px 0 0 !important;
-    padding:0 !important;
-    overflow:hidden !important;
-    display:flex !important;
-    flex-direction:column !important;
-    background:#fff !important;
-  }
-
-  /* Header */
-  #plannerTaskModal .modal-box > .row.between:first-child{
-    flex:0 0 auto !important;
-    padding:18px 18px 12px !important;
-    background:#fff !important;
-    border-bottom:1px solid #eee4df !important;
-    position:sticky !important;
-    top:0 !important;
-    z-index:3 !important;
-  }
-
-  /* Scrollable form body */
-  #plannerTaskModal .modal-box > div[style*="display:grid"]{
-    flex:1 1 auto !important;
-    overflow-y:auto !important;
-    -webkit-overflow-scrolling:touch !important;
-    margin:0 !important;
-    padding:14px 18px 18px !important;
-    min-height:0 !important;
-  }
-
-  /* Bottom action bar */
-  #plannerTaskModal .modal-box > .row[style*="justify-content:space-between"]{
-    flex:0 0 auto !important;
-    position:sticky !important;
-    bottom:0 !important;
-    z-index:4 !important;
-    margin:0 !important;
-    padding:12px 18px calc(14px + env(safe-area-inset-bottom)) !important;
-    background:rgba(255,255,255,.98) !important;
-    border-top:1px solid #eadfd8 !important;
-    box-shadow:0 -8px 22px rgba(72,52,44,.08) !important;
-  }
-
-  #plannerTaskModal .modal-box > .row[style*="justify-content:space-between"] > .row{
-    width:100% !important;
-    margin-left:0 !important;
-    display:grid !important;
-    grid-template-columns:1fr 1fr !important;
-    gap:10px !important;
-  }
-
-  #plannerTaskModal .modal-box > .row[style*="justify-content:space-between"] .btn{
-    min-height:48px !important;
-    width:100% !important;
-    font-size:15px !important;
-    border-radius:14px !important;
-  }
-
-  #plannerTaskModal #plannerDeleteBtn{
-    width:100% !important;
-    min-height:44px !important;
-    margin-bottom:8px !important;
-  }
-
-  /* Keep bottom app navigation below modal */
-  .modal.show{
-    z-index:200 !important;
-  }
-
-  .mobile-bottom-nav{
-    z-index:90 !important;
-  }
+@media (min-width:821px) and (max-width:980px){
+  .app{grid-template-columns:185px minmax(0,1fr)!important}
+  .sidebar{width:185px!important;min-width:185px!important;max-width:185px!important}
+  .main{padding:18px 16px 28px!important}
+  .hero-grid{grid-template-columns:1fr!important}
+  .today-card{min-height:180px!important}
+  .stats,.shortcuts{grid-template-columns:repeat(2,minmax(0,1fr))!important}
 }
 
 </style>
@@ -1343,7 +1068,7 @@ button,input,textarea,select{font-family:"LXGW WenKai TC","KaiTi","STKaiti","DFK
     <div class="mobile-brand-title">MR DERRICK NOTEBOOK</div>
     <div class="mobile-brand-sub">Private workspace ☁️</div>
   </div>
-  <button class="mobile-add-btn" type="button" onclick="openNote()">＋ 新笔记</button>
+  <button class="mobile-add-btn" type="button" onclick="openPlannerTask()">＋ 新事项</button>
 </div>
 
 <nav class="mobile-bottom-nav" aria-label="手机版导航">
@@ -1385,7 +1110,7 @@ button,input,textarea,select{font-family:"LXGW WenKai TC","KaiTi","STKaiti","DFK
 <div><h1>Good day, Mr Derrick ☁️</h1><div class="date" id="todayText"></div></div>
 <div class="row" style="margin-left:auto;justify-content:flex-end">
   <div id="mottoDisplay" class="motto-display"></div>
-  <button class="btn primary" onclick="openNote()">+ 新笔记</button>
+  <button class="btn primary" onclick="openPlannerTask()">+ 新笔记</button>
 </div>
 </div>
 <div id="urgentBanner" class="urgent-banner row between" onclick="openUrgentPopup()">
@@ -1396,9 +1121,9 @@ button,input,textarea,select{font-family:"LXGW WenKai TC","KaiTi","STKaiti","DFK
   <div style="font-size:22px">→</div>
 </div>
 <div class="dashboard-grid">
-<div class="card welcome"><div class="muted">WELCOME BACK</div><h2 style="font-size:32px;margin:8px 0">这一周，想完成什么？</h2><p class="muted" style="max-width:600px;line-height:1.7">把事项直接排进 Weekly Plan，一眼看完整周安排，也可以随时勾选完成。</p></div>
+<div class="card welcome"><div class="muted">WELCOME BACK</div><h2 style="font-size:32px;margin:8px 0">这个月，想完成什么？</h2><p class="muted" style="max-width:600px;line-height:1.7">把事项直接排进 Monthly Plan，一眼看完整个月安排，也可以随时勾选完成。</p></div>
 <div class="card today-card"><h3>📌 今天</h3><div id="dashToday"></div></div>
-<div class="card stat"><div class="muted">🗓️ 本周事项</div><div class="num" id="dashNotes">0</div></div>
+<div class="card stat"><div class="muted">📅 本月事项</div><div class="num" id="dashNotes">0</div></div>
 <div class="card stat"><div class="muted">✅ 待完成</div><div class="num" id="dashTodos">0</div></div>
 <div class="card stat"><div class="muted">⭐ 置顶</div><div class="num" id="dashPins">0</div></div>
 <div class="card stat"><div class="muted">⚠️ 逾期</div><div class="num" id="dashOverdue">0</div></div>
@@ -1562,7 +1287,7 @@ button,input,textarea,select{font-family:"LXGW WenKai TC","KaiTi","STKaiti","DFK
     </div>
     <div class="row" style="justify-content:space-between;margin-top:16px">
       <button class="btn warn" id="plannerDeleteBtn" type="button" onclick="deletePlannerTask()" style="display:none">删除</button>
-      <div class="row" style="margin-left:auto"><button class="btn" type="button" onclick="closeModal('plannerTaskModal')">取消</button><button class="btn primary" type="button" onclick="savePlannerTask()">✓ 保存事项</button></div>
+      <div class="row" style="margin-left:auto"><button class="btn" type="button" onclick="closeModal('plannerTaskModal')">取消</button><button class="btn primary" type="button" onclick="savePlannerTask()">保存</button></div>
     </div>
   </div>
 </div>
